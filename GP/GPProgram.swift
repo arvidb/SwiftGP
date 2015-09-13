@@ -19,10 +19,16 @@ class GPProgram {
     static let MAX_DEPTH = 4
     private var rootNode: GPNode? = nil
     
+    var name = "Unknown"
     var delegate: GPProgramDelegate?
     
     static let availableNodes: [GPNode.Type] = [GPAnd.self, GPOr.self, GPNot.self, GPIf.self, GPMove.self, GPSensor.self]
     static let endNodes: [GPNode.Type] = [GPMove.self, GPSensor.self]
+    
+    init(name: String) {
+    
+        self.name = name
+    }
     
     func randomNode(available: [GPNode.Type] = availableNodes, depth: Int) -> GPNode {
         

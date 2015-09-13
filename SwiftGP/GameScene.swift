@@ -8,20 +8,24 @@
 
 import SpriteKit
 
-class GameScene: SKScene, GPProgramDelegate {
+class GameScene: SKScene, GPProgramDelegate, GPDelegate {
     
     var trail = [CGPoint]()
     let gp = GP()
-    let label = SKLabelNode(text: "fitness")
+    let lblFitness = SKLabelNode(text: "")
+    let lblProgram = SKLabelNode(text: "")
+    let lblStatus = SKLabelNode(text: "")
     
     override func didMoveToView(view: SKView) {
         
-        // Build Track
-        for (var y=0; y < gp.track.count; y++) {
+        gp.delegate = self
         
-            for (var x=0; x < gp.track[y].count; x++) {
+        // Build Track
+        for (var y=0; y < GPExampleTrack.count; y++) {
+        
+            for (var x=0; x < GPExampleTrack[y].count; x++) {
                 
-                let val = gp.track[y][x]
+                let val = GPExampleTrack[y][x]
                 var color = SKColor.whiteColor()
                 if (val == -1) {
                     color = SKColor.blackColor()
@@ -32,14 +36,36 @@ class GameScene: SKScene, GPProgramDelegate {
             }
         }
         
-        label.position = CGPointMake(500, 100)
-        self.addChild(label)
+        
+        lblFitness.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetHeight(self.frame)*0.7)
+        self.addChild(lblFitness)
+        
+        lblProgram.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetHeight(self.frame)*0.8)
+        self.addChild(lblProgram)
+        
+        lblStatus.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetHeight(self.frame)*0.9)
+        self.addChild(lblStatus)
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             self.gp.execute(self)
+        })
+    }
+    
+    func didStartAlgorithm(gp: GP) {
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            self.lblStatus.text = "Calculating..."
+        })
+    }
+    
+    func didCompleteAlgorithm(gp: GP) {
+        dispatch_async(dispatch_get_main_queue(), {
+            self.lblStatus.text = "Complete!"
+            self.lblProgram.text = ""
+            self.lblFitness.text = ""
         })
     }
     
@@ -58,7 +84,8 @@ class GameScene: SKScene, GPProgramDelegate {
             
             dispatch_async(dispatch_get_main_queue(), {
                 
-                self.label.text = "fitness: \(score)"
+                self.lblProgram.text = "program: \(program.name)"
+                self.lblFitness.text = "fitness: \(score)"
                 let trailNode = SKNode()
                 trailNode.name = "trailNode"
                 self.addChild(trailNode)

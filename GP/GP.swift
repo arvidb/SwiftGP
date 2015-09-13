@@ -8,28 +8,26 @@
 
 import Foundation
 
+protocol GPDelegate {
+    func didStartAlgorithm(gp: GP)
+    func didCompleteAlgorithm(gp: GP)
+}
+
 class GP {
 
-    let track = [[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
-                [-1, 1, 1, 1, 1, 1, 1, 1, 1,-1],
-                [-1, 1, 0, 0, 0, 0, 0, 0, 1,-1],
-                [-1, 1, 0, 0, 0, 0, 0, 0, 1,-1],
-                [-1, 1, 0, 0, 0, 0, 0, 0, 1,-1],
-                [-1, 1, 0, 0, 0, 0, 0, 0, 1,-1],
-                [-1, 1, 0, 1, 1, 1, 1, 0, 1,-1],
-                [-1, 1, 0, 1,-1,-1, 1, 0, 1,-1],
-                [-1, 1, 1, 1,-1,-1, 1, 1, 1,-1],
-                [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]]
+    var delegate: GPDelegate?
     
     func randomTrackPos() -> GPVector2 {
-        return GPVector2(x:Int(arc4random_uniform(UInt32(track[0].count))), y:Int(arc4random_uniform(UInt32(track.count))))
+        return GPVector2(x:Int(arc4random_uniform(UInt32(GPExampleTrack[0].count))), y:Int(arc4random_uniform(UInt32(GPExampleTrack.count))))
     }
     
     func execute(delegate: GPProgramDelegate? = nil) {
     
+        self.delegate?.didStartAlgorithm(self)
+        
         for (var i=0; i < 5000; i++) {
         
-            let gp = GPProgram()
+            let gp = GPProgram(name: "Program_\(i)")
             if (delegate != nil) {
                 gp.delegate = delegate
             }
@@ -42,16 +40,18 @@ class GP {
             for _ in 0...10 {
             
                 var pos = self.randomTrackPos()
-                while (track[pos.x][pos.y] != 0) {
+                while (GPExampleTrack[pos.x][pos.y] != 0) {
                 
                     pos = self.randomTrackPos()
                 }
                 
-                let fitness = gp.evaluate(track, position: &pos)
+                let fitness = gp.evaluate(GPExampleTrack, position: &pos)
                 maxFitness = max(maxFitness, fitness)
             }
             
             //print(maxFitness)
         }
+        
+        self.delegate?.didCompleteAlgorithm(self)
     }
 }

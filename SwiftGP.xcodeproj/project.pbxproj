@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2227814C1BA6176D00A8FADE /* GPTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2227814B1BA6176D00A8FADE /* GPTrack.swift */; settings = {ASSET_TAGS = (); }; };
 		8864DA631BA3511A005EACC5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8864DA621BA3511A005EACC5 /* AppDelegate.swift */; };
 		8864DA651BA3511A005EACC5 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8864DA641BA3511A005EACC5 /* GameScene.sks */; };
 		8864DA671BA3511A005EACC5 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8864DA661BA3511A005EACC5 /* GameScene.swift */; };
@@ -14,9 +15,14 @@
 		8864DA6C1BA3511A005EACC5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8864DA6A1BA3511A005EACC5 /* Main.storyboard */; };
 		8864DA6E1BA3511A005EACC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8864DA6D1BA3511A005EACC5 /* Assets.xcassets */; };
 		8864DA711BA3511A005EACC5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8864DA6F1BA3511A005EACC5 /* LaunchScreen.storyboard */; };
+		88EEC0111BA56DD00034B061 /* GP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EEC00D1BA56DD00034B061 /* GP.swift */; settings = {ASSET_TAGS = (); }; };
+		88EEC0121BA56DD00034B061 /* GPMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EEC00E1BA56DD00034B061 /* GPMath.swift */; settings = {ASSET_TAGS = (); }; };
+		88EEC0131BA56DD00034B061 /* GPNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EEC00F1BA56DD00034B061 /* GPNodes.swift */; settings = {ASSET_TAGS = (); }; };
+		88EEC0141BA56DD00034B061 /* GPProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EEC0101BA56DD00034B061 /* GPProgram.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2227814B1BA6176D00A8FADE /* GPTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPTrack.swift; sourceTree = "<group>"; };
 		8864DA5F1BA3511A005EACC5 /* SwiftGP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftGP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8864DA621BA3511A005EACC5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8864DA641BA3511A005EACC5 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -26,6 +32,10 @@
 		8864DA6D1BA3511A005EACC5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8864DA701BA3511A005EACC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8864DA721BA3511A005EACC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88EEC00D1BA56DD00034B061 /* GP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GP.swift; sourceTree = "<group>"; };
+		88EEC00E1BA56DD00034B061 /* GPMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPMath.swift; sourceTree = "<group>"; };
+		88EEC00F1BA56DD00034B061 /* GPNodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPNodes.swift; sourceTree = "<group>"; };
+		88EEC0101BA56DD00034B061 /* GPProgram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPProgram.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +52,7 @@
 		8864DA561BA3511A005EACC5 = {
 			isa = PBXGroup;
 			children = (
+				88EEC00C1BA56DD00034B061 /* GP */,
 				8864DA611BA3511A005EACC5 /* SwiftGP */,
 				8864DA601BA3511A005EACC5 /* Products */,
 			);
@@ -68,6 +79,18 @@
 				8864DA721BA3511A005EACC5 /* Info.plist */,
 			);
 			path = SwiftGP;
+			sourceTree = "<group>";
+		};
+		88EEC00C1BA56DD00034B061 /* GP */ = {
+			isa = PBXGroup;
+			children = (
+				88EEC00D1BA56DD00034B061 /* GP.swift */,
+				88EEC00E1BA56DD00034B061 /* GPMath.swift */,
+				88EEC00F1BA56DD00034B061 /* GPNodes.swift */,
+				88EEC0101BA56DD00034B061 /* GPProgram.swift */,
+				2227814B1BA6176D00A8FADE /* GPTrack.swift */,
+			);
+			path = GP;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,7 +166,12 @@
 			files = (
 				8864DA671BA3511A005EACC5 /* GameScene.swift in Sources */,
 				8864DA691BA3511A005EACC5 /* GameViewController.swift in Sources */,
+				88EEC0131BA56DD00034B061 /* GPNodes.swift in Sources */,
+				88EEC0111BA56DD00034B061 /* GP.swift in Sources */,
+				2227814C1BA6176D00A8FADE /* GPTrack.swift in Sources */,
 				8864DA631BA3511A005EACC5 /* AppDelegate.swift in Sources */,
+				88EEC0141BA56DD00034B061 /* GPProgram.swift in Sources */,
+				88EEC0121BA56DD00034B061 /* GPMath.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
