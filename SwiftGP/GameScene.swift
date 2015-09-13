@@ -8,38 +8,88 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, GPProgramDelegate {
+    
+    var trail = [CGPoint]()
+    let gp = GP()
+    let label = SKLabelNode(text: "fitness")
+    
     override func didMoveToView(view: SKView) {
-        /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!";
-        myLabel.fontSize = 45;
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
         
-        self.addChild(myLabel)
+        // Build Track
+        for (var y=0; y < gp.track.count; y++) {
+        
+            for (var x=0; x < gp.track[y].count; x++) {
+                
+                let val = gp.track[y][x]
+                var color = SKColor.whiteColor()
+                if (val == -1) {
+                    color = SKColor.blackColor()
+                }
+                let brick = SKSpriteNode(color: color, size: CGSizeMake(20, 20))
+                brick.position = CGPointMake(CGFloat(400 + x * 20), CGFloat(400 - y * 20))
+                self.addChild(brick)
+            }
+        }
+        
+        label.position = CGPointMake(500, 100)
+        self.addChild(label)
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-       /* Called when a touch begins */
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
-        for touch in touches {
-            let location = touch.locationInNode(self)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            self.gp.execute(self)
+        })
+    }
+    
+    func didStartEvaluation(program: GPProgram) {
+     
+        dispatch_async(dispatch_get_main_queue(), {
             
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
+            self.trail.removeAll()
+        })
+    }
+    
+    func didEndEvaluation(program: GPProgram, score: Int) {
+        
+        if (score > 8) {
+            print(score)
             
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                self.label.text = "fitness: \(score)"
+                let trailNode = SKNode()
+                trailNode.name = "trailNode"
+                self.addChild(trailNode)
+                for pt in self.trail {
+                
+                    let trail = SKSpriteNode(color: SKColor.yellowColor(), size: CGSizeMake(20, 20))
+                    trail.name = "trail"
+                    trail.alpha = 0.4
+                    trail.position = CGPointMake(CGFloat(400 + pt.x * 20), CGFloat(400 - pt.y * 20))
+                    trailNode.addChild(trail)
+                }
+                
+            })
             
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
+            sleep(2)
             
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                if let trailNode = self.childNodeWithName("trailNode") {
+                    trailNode.removeFromParent()
+                }
+            })
         }
     }
-   
-    override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
+    
+    func didChangePosition(program: GPProgram, position: GPVector2) {
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            self.trail.append(CGPointMake(CGFloat(position.x), CGFloat(position.y)))
+        })
+        //usleep(100000)
     }
 }
