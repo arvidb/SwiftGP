@@ -16,8 +16,13 @@ enum Direction {
 class GPNode {
     
     var children = [GPNode!]()
-    var parent = [GPNode!]()
+    var parent: GPNode? = nil
     var depth: Int = 0
+    
+    func clone() -> GPNode {
+    
+        return GPNode()
+    }
     
     func numberOfChildren() -> Int {
         return 0
@@ -36,6 +41,18 @@ class GPNode {
 }
 
 class GPAnd : GPNode {
+    
+    override func clone() -> GPNode {
+        
+        let clone = GPAnd()
+        for child in self.children {
+        
+            clone.children.append(child.clone())
+        }
+        
+        return clone
+    }
+    
     override func numberOfChildren() -> Int {
         return 2
     }
@@ -51,6 +68,18 @@ class GPAnd : GPNode {
 }
 
 class GPOr : GPNode {
+    
+    override func clone() -> GPNode {
+        
+        let clone = GPOr()
+        for child in self.children {
+            
+            clone.children.append(child.clone())
+        }
+        
+        return clone
+    }
+    
     override func numberOfChildren() -> Int {
         return 2
     }
@@ -66,6 +95,18 @@ class GPOr : GPNode {
 }
 
 class GPNot : GPNode {
+    
+    override func clone() -> GPNode {
+        
+        let clone = GPNot()
+        for child in self.children {
+            
+            clone.children.append(child.clone())
+        }
+        
+        return clone
+    }
+    
     override func numberOfChildren() -> Int {
         return 1
     }
@@ -80,6 +121,18 @@ class GPNot : GPNode {
 }
 
 class GPIf : GPNode {
+    
+    override func clone() -> GPNode {
+        
+        let clone = GPIf()
+        for child in self.children {
+            
+            clone.children.append(child.clone())
+        }
+        
+        return clone
+    }
+    
     override func numberOfChildren() -> Int {
         return 3
     }
@@ -99,7 +152,19 @@ class GPIf : GPNode {
 class GPSensor : GPNode {
     
     static let directions = [Direction.North, Direction.NorthEast, Direction.East, Direction.SouthEast, Direction.South, Direction.SouthWest, Direction.West, Direction.NorthWest]
-    let direction: Int = Int(arc4random_uniform(UInt32(directions.count)))
+    var direction: Int = Int(arc4random_uniform(UInt32(directions.count)))
+    
+    override func clone() -> GPNode {
+        
+        let clone = GPSensor()
+        clone.direction = self.direction
+        for child in self.children {
+            
+            clone.children.append(child.clone())
+        }
+        
+        return clone
+    }
     
     override func evaluate(let track: [[Int]], inout position: GPVector2, inout hasMoved: Bool) -> Bool {
         
@@ -145,7 +210,19 @@ class GPSensor : GPNode {
 
 class GPMove : GPNode {
     static let directions = [Direction.North, Direction.East, Direction.South, Direction.West]
-    let direction: Int = Int(arc4random_uniform(UInt32(directions.count)))
+    var direction: Int = Int(arc4random_uniform(UInt32(directions.count)))
+    
+    override func clone() -> GPNode {
+        
+        let clone = GPMove()
+        clone.direction = self.direction
+        for child in self.children {
+            
+            clone.children.append(child.clone())
+        }
+        
+        return clone
+    }
     
     override func evaluate(let track: [[Int]], inout position: GPVector2, inout hasMoved: Bool) -> Bool {
         

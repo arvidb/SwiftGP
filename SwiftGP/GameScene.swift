@@ -61,6 +61,15 @@ class GameScene: SKScene, GPProgramDelegate, GPDelegate {
         })
     }
     
+    func didCompleteGeneration(generation: GPGeneration) {
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            self.lblStatus.text = "Complete!"
+            self.lblProgram.text = "\(generation.name)"
+            self.lblFitness.text = "\(generation.topFitness)"
+        })
+    }
+    
     func didCompleteAlgorithm(gp: GP) {
         dispatch_async(dispatch_get_main_queue(), {
             self.lblStatus.text = "Complete!"
@@ -71,6 +80,7 @@ class GameScene: SKScene, GPProgramDelegate, GPDelegate {
     
     func didStartEvaluation(program: GPProgram) {
      
+        return
         dispatch_async(dispatch_get_main_queue(), {
             
             self.trail.removeAll()
@@ -78,6 +88,7 @@ class GameScene: SKScene, GPProgramDelegate, GPDelegate {
     }
     
     func didEndEvaluation(program: GPProgram, score: Int) {
+        return
         
         if (score > 8) {
             print(score)
@@ -112,7 +123,8 @@ class GameScene: SKScene, GPProgramDelegate, GPDelegate {
     }
     
     func didChangePosition(program: GPProgram, position: GPVector2) {
-        
+        return
+            
         dispatch_async(dispatch_get_main_queue(), {
             
             self.trail.append(CGPointMake(CGFloat(position.x), CGFloat(position.y)))

@@ -19,6 +19,7 @@
 		88EEC0121BA56DD00034B061 /* GPMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EEC00E1BA56DD00034B061 /* GPMath.swift */; settings = {ASSET_TAGS = (); }; };
 		88EEC0131BA56DD00034B061 /* GPNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EEC00F1BA56DD00034B061 /* GPNodes.swift */; settings = {ASSET_TAGS = (); }; };
 		88EEC0141BA56DD00034B061 /* GPProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EEC0101BA56DD00034B061 /* GPProgram.swift */; settings = {ASSET_TAGS = (); }; };
+		88EEC0161BAB37490034B061 /* GPGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EEC0151BAB37490034B061 /* GPGeneration.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		88EEC00E1BA56DD00034B061 /* GPMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPMath.swift; sourceTree = "<group>"; };
 		88EEC00F1BA56DD00034B061 /* GPNodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPNodes.swift; sourceTree = "<group>"; };
 		88EEC0101BA56DD00034B061 /* GPProgram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPProgram.swift; sourceTree = "<group>"; };
+		88EEC0151BAB37490034B061 /* GPGeneration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPGeneration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 				88EEC00F1BA56DD00034B061 /* GPNodes.swift */,
 				88EEC0101BA56DD00034B061 /* GPProgram.swift */,
 				2227814B1BA6176D00A8FADE /* GPTrack.swift */,
+				88EEC0151BAB37490034B061 /* GPGeneration.swift */,
 			);
 			path = GP;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 			files = (
 				8864DA671BA3511A005EACC5 /* GameScene.swift in Sources */,
 				8864DA691BA3511A005EACC5 /* GameViewController.swift in Sources */,
+				88EEC0161BAB37490034B061 /* GPGeneration.swift in Sources */,
 				88EEC0131BA56DD00034B061 /* GPNodes.swift in Sources */,
 				88EEC0111BA56DD00034B061 /* GP.swift in Sources */,
 				2227814C1BA6176D00A8FADE /* GPTrack.swift in Sources */,

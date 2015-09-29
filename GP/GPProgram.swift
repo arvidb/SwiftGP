@@ -19,6 +19,8 @@ class GPProgram {
     static let MAX_DEPTH = 4
     private var rootNode: GPNode? = nil
     
+    var maxFitness = 0
+    
     var name = "Unknown"
     var delegate: GPProgramDelegate?
     
@@ -87,6 +89,61 @@ class GPProgram {
         return fitness
     }
     
+    func clone() -> GPProgram {
+    
+        let clone = GPProgram(name: self.name)
+        clone.delegate = self.delegate
+        clone.rootNode = self.rootNode!.clone()
+        
+        return clone
+    }
+    
+    func crossBreed(otherProgram: GPProgram) -> GPProgram {
+    
+        let newProgramA = self.clone()
+        let newProgramB = otherProgram.clone()
+        
+        var flatList = self.buildFlatChildList(newProgramA.rootNode!)
+        
+        let randomIndex = Int(arc4random_uniform(UInt32(flatList.count)))
+        let randomChild = flatList[randomIndex]
+        
+        let flatList2 = self.buildFlatChildList(newProgramB.rootNode!)
+        
+        let randomIndex2 = Int(arc4random_uniform(UInt32(flatList2.count)))
+        let randomChild2 = flatList2[randomIndex2]
+        
+        if randomChild.children.count > 0 {
+            let i = Int(arc4random_uniform(UInt32(randomChild.children.count)))
+            randomChild2.parent = randomChild.children[i].parent
+            randomChild.children[i] = randomChild2
+        }
+        else if let parent = randomChild.parent {
+            let i = Int(arc4random_uniform(UInt32(parent.children.count)))
+            randomChild2.parent = parent.children[i].parent
+            parent.children[i] = randomChild2
+        }
+        else {
+        
+            newProgramA.rootNode = randomChild2
+            randomChild2.parent = nil
+        }
+        
+        return newProgramA
+    }
+    
+    func buildFlatChildList(node: GPNode) -> [GPNode] {
+    
+        var children = [GPNode]()
+        children.append(node)
+        for child in node.children {
+            
+            children.appendContentsOf(buildFlatChildList(child))
+        }
+        
+        return children
+    }
+    
     func printTree() {
     
         printChildren(self.rootNode!)
@@ -106,6 +163,7 @@ class GPProgram {
         for (var n=0; n < node.numberOfChildren(); n++) {
             let child = randomNode(depth: node.depth)
             node.children.append(child)
+            child.parent = node
             child.depth = node.depth+1
             generateChildNodes(child)
         }

@@ -10,6 +10,7 @@ import Foundation
 
 protocol GPDelegate {
     func didStartAlgorithm(gp: GP)
+    func didCompleteGeneration(generation: GPGeneration)
     func didCompleteAlgorithm(gp: GP)
 }
 
@@ -17,39 +18,23 @@ class GP {
 
     var delegate: GPDelegate?
     
-    func randomTrackPos() -> GPVector2 {
-        return GPVector2(x:Int(arc4random_uniform(UInt32(GPExampleTrack[0].count))), y:Int(arc4random_uniform(UInt32(GPExampleTrack.count))))
-    }
-    
     func execute(delegate: GPProgramDelegate? = nil) {
     
         self.delegate?.didStartAlgorithm(self)
         
-        for (var i=0; i < 5000; i++) {
+        var lastGen = GPGeneration(name: "Generation0")
+        lastGen.generate(delegate)
+        lastGen.evaluate()
         
-            let gp = GPProgram(name: "Program_\(i)")
-            if (delegate != nil) {
-                gp.delegate = delegate
-            }
+        for i in 0...500 {
+         
+            self.delegate?.didCompleteGeneration(lastGen)
             
-            gp.generate()
-            //gp.printTree()
+            let genx = GPGeneration(name: "Generation\(i+1)")
+            genx.programs = lastGen.topCandidates
+            genx.evaluate()
             
-            // Run the program 10 times with random positions to determine its fitness score
-            var maxFitness = 0
-            for _ in 0...10 {
-            
-                var pos = self.randomTrackPos()
-                while (GPExampleTrack[pos.x][pos.y] != 0) {
-                
-                    pos = self.randomTrackPos()
-                }
-                
-                let fitness = gp.evaluate(GPExampleTrack, position: &pos)
-                maxFitness = max(maxFitness, fitness)
-            }
-            
-            //print(maxFitness)
+            lastGen = genx
         }
         
         self.delegate?.didCompleteAlgorithm(self)
